@@ -215,5 +215,12 @@ class TestMatrix(unittest.TestCase):
         gExpResult = gfp.toGFP(expectedResult)
         self.assertEqual(operations.solveVondermond(gVectorA, gVectorC), gExpResult)
 
+    def test_unique_vector_generator(self):
+        operations = MOperations(Simple())
+        vector = operations.createUniqueFloatVector(100, 3)
+
+        vectorInt = operations.createUniqueIntegerVector(30, 20)
+        print vectorInt
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import *
 
 class MOperations(object):
     ar = None
@@ -30,6 +31,28 @@ class MOperations(object):
     def printVectorToFile(self, fileName, vector):
         with open(fileName, 'w') as openFile:
             openFile.write(str(vector))
+
+    def createUniqueFloatVector(self, size, valueBorder):
+        vector = []
+        tempSet = set()
+        while (len(tempSet) < size):
+            value = uniform(-valueBorder, valueBorder)
+            if (value not in tempSet):
+                tempSet.add(value)
+                vector.append([value])
+
+        return vector
+
+    def createUniqueIntegerVector(self, size, valueBorder):
+        vector = []
+        tempSet = set()
+        while (len(tempSet) < size):
+            value = randint(-valueBorder, valueBorder)
+            if (value not in tempSet):
+                tempSet.add(value)
+                vector.append([value])
+
+        return vector
 
     def transposeMatrix(self, matrix):
         return map(list, zip(*matrix))
