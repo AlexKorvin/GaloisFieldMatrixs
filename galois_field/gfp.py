@@ -52,3 +52,6 @@ class GFP(object):
             for j in range(len(matrix[0])):
                 result[i][j] = matrix[i][j] % self.p
         return result
+
+    def __repr__(self):
+        return "GFP(" + str(self.p) + ")"    

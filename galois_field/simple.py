@@ -14,3 +14,6 @@ class Simple():
 
     def div(self, a, b):
         return a / b
+
+    def __repr__(self):
+        return "Simple"

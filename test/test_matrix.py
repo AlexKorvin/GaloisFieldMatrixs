@@ -12,6 +12,8 @@ if __name__ == '__main__':
         from galois_field.simple import Simple
 
 import unittest
+import datetime
+import time
 
 class TestMatrix(unittest.TestCase):
 
@@ -220,7 +222,40 @@ class TestMatrix(unittest.TestCase):
         vector = operations.createUniqueFloatVector(100, 3)
 
         vectorInt = operations.createUniqueIntegerVector(30, 20)
-        print vectorInt
+        # print vectorInt
+        self.performance_simple_math(5, 5, Simple())
+        self.performance_simple_math(10, 10, Simple())
+        self.performance_simple_math(100, 100, Simple())
+        self.performance_simple_math(100, 3, Simple())
+        self.performance_simple_math(1000, 3, Simple())
+        self.performance_simple_math(10000, 3, Simple())
+
+
+
+    def performance_simple_math(self, dimension, boundory, arithmetic):
+        print "Test for dimension = " + str(dimension) + " boundory = " + str(boundory) + " ar = " + str(arithmetic)
+        operations = MOperations(arithmetic)
+        # vectorC = operations.createUniqueIntegerVector(dimension, boundory)
+        # vectorA = operations.createUniqueIntegerVector(dimension, boundory)
+
+        vectorC = operations.createUniqueFloatVector(dimension, boundory)
+        vectorA = operations.createUniqueFloatVector(dimension, boundory)
+
+        startVond = int(round(time.time() * 1000))
+        vondermondResult = operations.solveVondermond(vectorA, vectorC)
+        endVond = int(round(time.time() * 1000))
+        delta = endVond - startVond
+        print "Vondermont total: " + str(delta)
+
+        # vondermondMatrix = operations.generateVondermondMatrix(vectorC)
+        # startStr = datetime.datetime.now()
+        # inversedMatrix = operations.getMatrixInverse(vondermondMatrix)
+        # straightResult = operations.matrixMult(inversedMatrix, vectorA)
+        # endStr = datetime.datetime.now()
+        # delta = endStr - startStr
+        # print "Straight total: " + str(int(delta.microseconds))
+        # self.assertTrue(self.assertEqualWithInaccuaracy(vondermondResult, straightResult))
+
 
 if __name__ == '__main__':
     unittest.main()
