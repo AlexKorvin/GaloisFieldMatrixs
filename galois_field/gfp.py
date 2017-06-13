@@ -43,6 +43,9 @@ class GFP(object):
             yCur = tempY
 
     def div(self, a, b):
+        # print "GF(p) div: a = " + str(a) + " b = " + str(b)
+        # if (b % self.p == 0):
+        #     return a
         divGalois = (a * self.inverse(b)) % self.p
         return divGalois
 
@@ -54,4 +57,4 @@ class GFP(object):
         return result
 
     def __repr__(self):
-        return "GFP(" + str(self.p) + ")"    
+        return "GFP(" + str(self.p) + ")"

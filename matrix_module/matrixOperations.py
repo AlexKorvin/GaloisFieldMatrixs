@@ -47,10 +47,10 @@ class MOperations(object):
         vector = []
         tempSet = set()
         while (len(tempSet) < size):
-            value = randint(-valueBorder, valueBorder)
+            value = randint(1, valueBorder)
             if ((value not in tempSet) and (value != 0)):
                 tempSet.add(value)
-                vector.append([float(value)])
+                vector.append([value])
 
         return vector
 

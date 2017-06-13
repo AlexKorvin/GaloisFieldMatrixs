@@ -49,12 +49,12 @@ class TestMatrix(unittest.TestCase):
         with self.assertRaises(ArithmeticError):
             operations.matrixMult(matrixA, matrixB)
 
-    # def test_solve_vandermond_rank4(self):
-    #     operations = MOperations(Simple())
-    #     vectorC = [[2], [-1], [-3], [-2]]
-    #     vectorA = [[35], [2], [-50], [-13]]
-    #     expectedResult = [[7], [4], [1], [2]]
-    #     self.assertEqual(operations.solveVondermond(vectorA, vectorC), expectedResult)
+    def test_solve_vandermond_rank4(self):
+        operations = MOperations(Simple())
+        vectorC = [[2], [-1], [-3], [-2]]
+        vectorA = [[35], [2], [-50], [-13]]
+        expectedResult = [[7], [4], [1], [2]]
+        self.assertEqual(operations.solveVondermond(vectorA, vectorC), expectedResult)
 
     def test_solve_vandermond_rank3(self):
         operations = MOperations(Simple())
@@ -219,18 +219,40 @@ class TestMatrix(unittest.TestCase):
 
     def test_unique_vector_generator(self):
         operations = MOperations(Simple())
-        vector = operations.createUniqueFloatVector(100, 3)
+        # vector = operations.createUniqueFloatVector(100, 3)
 
-        vectorInt = operations.createUniqueIntegerVector(30, 20)
+        # vectorInt = operations.createUniqueIntegerVector(30, 20)
         # print vectorInt
         self.performance_simple_math(5, 5, Simple())
-        self.performance_simple_math(10, 10, Simple())
-        self.performance_simple_math(100, 100, Simple())
+        self.performance_simple_math(10, 3, Simple())
         self.performance_simple_math(100, 3, Simple())
         self.performance_simple_math(1000, 3, Simple())
-        self.performance_simple_math(10000, 3, Simple())
+        # self.performance_simple_math(10000, 3, Simple())
 
+        self.performance_gfp_math(10, 13, GFP(13))
+        self.performance_gfp_math(100, 139, GFP(139))
+        self.performance_gfp_math(1000, 1319, GFP(1319))
+        self.performance_gfp_math(10000, 12197, GFP(12197))
 
+    def performance_gfp_math(self, dimension, boundory, arithmetic):
+        print "Test for dimension = " + str(dimension) + " boundory = " + str(boundory) + " ar = " + str(arithmetic)
+        operations = MOperations(arithmetic)
+        vectorC = operations.createUniqueIntegerVector(dimension, boundory)
+        vectorA = operations.createUniqueIntegerVector(dimension, boundory)
+
+        # print vectorC
+        # print vectorA
+
+        gfp_vectorC = arithmetic.toGFP(vectorC)
+        gfp_vectorA = arithmetic.toGFP(vectorA)
+        #
+        # print gfp_vectorC
+        # print gfp_vectorA
+        startVond = int(round(time.time() * 1000))
+        vondermondResult = operations.solveVondermond(gfp_vectorA, gfp_vectorC)
+        endVond = int(round(time.time() * 1000))
+        delta = endVond - startVond
+        print "Vondermont total: " + str(delta)
 
     def performance_simple_math(self, dimension, boundory, arithmetic):
         print "Test for dimension = " + str(dimension) + " boundory = " + str(boundory) + " ar = " + str(arithmetic)
@@ -248,12 +270,15 @@ class TestMatrix(unittest.TestCase):
         print "Vondermont total: " + str(delta)
 
         # vondermondMatrix = operations.generateVondermondMatrix(vectorC)
-        # startStr = datetime.datetime.now()
+        # print "Generate Vondermont matrix: "
+        # startStr = int(round(time.time() * 1000))
         # inversedMatrix = operations.getMatrixInverse(vondermondMatrix)
+        # print "Inverse matrix: "
         # straightResult = operations.matrixMult(inversedMatrix, vectorA)
-        # endStr = datetime.datetime.now()
+        # print "Straight result matrix: "
+        # endStr = int(round(time.time() * 1000))
         # delta = endStr - startStr
-        # print "Straight total: " + str(int(delta.microseconds))
+        # print "Straight total: " + str(delta)
         # self.assertTrue(self.assertEqualWithInaccuaracy(vondermondResult, straightResult))
 
 
